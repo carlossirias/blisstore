@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 use App\Models\Category;
+use App\Models\Language;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -45,8 +46,39 @@ class DatabaseSeeder extends Seeder
         $categoryCuatro->save();
 
         $categoryCinco = new Category();
-        $categoryCinco->name = "Healt";
+        $categoryCinco->name = "Health";
         $categoryCinco->save();
-        
+
+        //Countries
+
+        $countryTres = new Language();
+        $countryTres->notation ="NI";
+        $countryTres->country ="Nicaragua";
+        $countryTres->save();
+
+        $countryUno = new Language();
+        $countryUno->notation = "PN";
+        $countryUno->country = "Panama";
+        $countryUno->save();
+
+        $countryDos = new Language();
+        $countryDos->notation ="CR";
+        $countryDos->country ="Costa Rica";
+        $countryDos->save();
+
+        $countryCuatro = new Language();
+        $countryCuatro->notation = "HN";
+        $countryCuatro->country = "Honduras";
+        $countryCuatro->save();
+
+        $countryCinco = new Language();
+        $countryCinco->notation = "SV";
+        $countryCinco->country = "El Salvador";
+        $countryCinco->save();
+
+        $countrySeis = new Language();
+        $countrySeis->notation = "GT";
+        $countrySeis->country = "Guatemala";
+        $countrySeis->save();
     }
 }

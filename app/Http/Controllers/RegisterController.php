@@ -1,34 +1,39 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
-
+use App\Models\Language;
+use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+use function PHPUnit\Framework\isEmpty;
 
 class RegisterController extends Controller
 {
     //
-    public function create(Request $request)
+
+    public function view()
     {
-        $query = DB::select('SELECT email FROM users WHERE email = ?', [$request->email]);
-        if($query) return back()->with("failed", "This email is already used :|");;
+        if(Auth::check()) return redirect('home');
 
-        $sql = User::create([
-            'name'=> $request->name,
-            'email'=> $request->email,
-            'password' => $request->password
-        ]);
+        $languages = Language::all();
+        return view('register', compact('languages'));
+    }
 
-        if($sql)
-        {
-            return back()->with("succesful", "Congratulations!");
-        }
-        else
-        {
-            return back()->with("failed", "You should verified each blank :|");
-        }
+    public function create(RegisterRequest $request)
+    {
+
+        $user = User::create($request->validated());
+
+        Auth::login($user);
+        return redirect(route('home.index'));
+    }
+
+    public function viewTermsConditions(){
+        return view('terms_conditions');
     }
 }
